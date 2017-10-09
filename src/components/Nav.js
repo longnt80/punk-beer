@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Link
 } from 'react-router-dom';
+import './styles/Nav.css'
 
 
 class Nav extends React.Component {
@@ -23,17 +24,17 @@ class Nav extends React.Component {
 		const addedClass = dropdownStatus ? "is-active" : '';
 
 	    return (
-	    	<div className={"Nav dropdown " + addedClass} onClick={this.handleClick}>
-	    		<div className="dropdown-trigger">
-	    			<button className="button" aria-haspopup="true" aria-controls="dropdown-menu">Types</button>
+	    	<div className="Nav">
+	    		<div className={"dropdown " + addedClass} onClick={this.handleClick}>
+	    			<div className="dropdown-trigger">
+	    				<button className="button" aria-haspopup="true" aria-controls="dropdown-menu">Types</button>
+	    			</div>
+	    				        <div className="dropdown-menu" id="dropdown-menu" role="menu">
+	    				        	<div className="dropdown-content">
+	    						        <div className="dropdown-item"><Link to="/category/light-beers">Light Beers</Link></div>
+	    						    </div>
+	    				        </div>
 	    		</div>
-		        <div className="dropdown-menu" id="dropdown-menu" role="menu">
-		        	<div className="dropdown-content">
-				        <div className="dropdown-item"><Link to="/cat01">Cat 01</Link></div>
-				        <div className="dropdown-item"><Link to="/cat02">Cat 02</Link></div>
-				        <div className="dropdown-item"><Link to="/cat03">Cat 03</Link></div>
-				    </div>
-		        </div>
 	    	</div>
 	    );
 	}

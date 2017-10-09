@@ -5,18 +5,36 @@ import {
   Link,
   Switch
 } from 'react-router-dom';
-import './App.css';
+import './styles/App.css';
 import ProductsPage from './ProductsPage';
 import ProductDetail from './ProductDetail';
 import Nav from './Nav';
 
 const data = {
-    new_products: 'https://api.punkapi.com/v2/beers?per_page=50'
+    new_products: 'https://api.punkapi.com/v2/beers?per_page=53',
+    light_beers: 'https://api.punkapi.com/v2/beers?abv_lt=4'
 }
 
 class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            beerId: 0,
+            beerInfo: {}
+        }
+    }
+
+    handleViewDetail = (id, oneBeerData) => {
+        console.log(oneBeerData.id);
+        this.setState({
+            beerId: id,
+            beerInfo: oneBeerData
+        })
+    }
+
     render() {
-        console.log(data.new_products)
+        const {beerId, oneBeerData} = this.state;
+
         return (
                 <Router basename={process.env.PUBLIC_URL}>
                     <div>
@@ -37,14 +55,40 @@ class App extends Component {
                                     <Route exact path="/" render={(props) => 
                                         ( <ProductsPage 
                                             {...props}
-                                            type="homepage"
+                                            pageType="homepage"
+                                            title="Our new products"
                                             data={data.new_products}
+                                            handleViewDetail={this.handleViewDetail}
                                             />)} 
                                     />
-                                    <Route path="/:cat" component={ProductsPage} />
-                                    <Route path="/:cat" component={ProductsPage} />
-                                    <Route path="/:cat" component={ProductsPage} />
-                                    <Route path="/products/:id" component={ProductDetail} />
+                                    
+                                    <Route path="/category/light-beers/products/:id" render={(props) =>
+                                        ( <ProductDetail
+                                            {...props}
+                                            beerId={beerId}
+                                            beerInfo={oneBeerData}
+                                            /> )}
+
+                                    />
+                                    
+                                    <Route path="/category/light-beers/" render={(props) => 
+                                        ( <ProductsPage 
+                                            {...props}
+                                            pageType="category"
+                                            title="List of light beers"
+                                            data={data.light_beers}
+                                            />)} 
+                                    />
+
+                                    <Route exact path="/products/:id" render={(props) =>
+                                        ( <ProductDetail
+                                            {...props}
+                                            beerId={beerId}
+                                            beerInfo={oneBeerData}
+                                            /> )}
+
+                                    />
+
                                 </Switch>
                             </div>
                         </section>
