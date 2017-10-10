@@ -36,6 +36,7 @@ class ProductsPage extends Component {
 
 
 		    this.setState({
+		    	currentPage: 1,
 		    	apiError: false,
 		    	dataLoaded: true,
 		    	beersData: resultArr,

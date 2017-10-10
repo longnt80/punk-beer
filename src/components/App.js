@@ -11,7 +11,7 @@ import ProductDetail from './ProductDetail';
 import Nav from './Nav';
 
 const data = {
-    new_products: 'https://api.punkapi.com/v2/beers?per_page=53',
+    new_products: 'https://api.punkapi.com/v2/beers?ids=132|109|91|6|100|212|168|126|31|52|192|106|111|1119',
     light_beers: 'https://api.punkapi.com/v2/beers?abv_lt=4'
 }
 
@@ -19,6 +19,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
+            pagination: 1,
             beerId: 0,
             beerInfo: {}
         }
@@ -56,7 +57,7 @@ class App extends Component {
                                         ( <ProductsPage 
                                             {...props}
                                             pageType="homepage"
-                                            title="Our new products"
+                                            title="Most active beers"
                                             data={data.new_products}
                                             handleViewDetail={this.handleViewDetail}
                                             />)} 

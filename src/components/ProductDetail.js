@@ -30,9 +30,7 @@ class ProductDetail extends Component {
 	}
 
     render() {
-    	const {beerId, match} = this.props;
     	const {beer} = this.state;
-        // const id = beerId === 0 ? match.params.id : beerId;
 
 		if (beer !== null) {
 		    return (
@@ -61,7 +59,7 @@ class ProductDetail extends Component {
 		            	</div>
 		            	<div className="column is-one-quarter">
 		            		<figure className="image">
-							  <img src={beer.image_url}/>
+							  <img alt="beer.name" src={beer.image_url}/>
 							</figure>
 		            	</div>
 		            </div>
