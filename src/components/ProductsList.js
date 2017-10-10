@@ -10,7 +10,7 @@ class ProductsList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			itemPerPage: 12,
+			itemPerPage: 8,
 			currentPage: 1,
 			apiError: false,
 			pagination: false,
@@ -75,15 +75,16 @@ class ProductsList extends Component {
 	componentDidMount() {
 		this.gettingData();
 	}
-
-
-
+	
+	
+	
 	componentDidUpdate(prevProps, prevState) {
 		const {pageType, data} = this.props;
 	    
 	    if (prevProps.pageType !== pageType || prevProps.data !== data) {
-	    	this.gettingData();
+			this.gettingData();
 	    }
+		window.scrollTo(0, 0);
 
 	}
 
@@ -97,10 +98,7 @@ class ProductsList extends Component {
 		)
 		
 
-    	if (!dataLoaded) {
-    		return <Loading type='waiting' />
-    	}
-    	else {
+    	if (dataLoaded) {
 	    	if (!apiError) {
 	    		const pageCustomHeader = <div className="title has-text-centered">{customHeading}:</div>
 	    		const displayItems = (
@@ -145,6 +143,9 @@ class ProductsList extends Component {
 	    	else {
 	    		return <Loading type='apiError' />
 	    	}
+    	}
+    	else {
+    		return <Loading type='waiting' />
     	}
 
 
