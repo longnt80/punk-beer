@@ -1,27 +1,40 @@
 import React, {Component} from 'react';
+import {Helmet} from "react-helmet";
 import axios from 'axios';
-import './styles/ProductDetail.css'
+import './styles/ProductDetail.css';
+import NoMatch from './NoMatch';
 
 class ProductDetail extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			beer: null
+			beer: null,
+			invalidData: false
 		}
 	}
 
-	componentDidMount() {
-	    const {match, beerInfo} = this.props;
+	gettingData = () => {
+		const {match, beerInfo} = this.props;
 
 	    if (!beerInfo) {
 	    	axios.get('https://api.punkapi.com/v2/beers?ids=' + match.params.id)
-	    	.then(res => res.data[0])
+	    	.then(res => {
+	    		console.log(res)
+	    		return res.data[0]	
+	    	})
 	    	.then(result => {
-	    		this.setState({
-	    			beer: {...result}
-	    		})
-	    	}
-    		)
+	    		console.log(result)
+	    		if (result !== undefined) {
+		    		this.setState({
+		    			beer: {...result}
+		    		})
+	    		}
+	    		else {
+	    			this.setState({
+		    			invalidData: true
+		    		})	
+	    		}
+	    	})
 	    	.catch(err => console.log(err))
 	    }
 	    else {
@@ -29,12 +42,35 @@ class ProductDetail extends Component {
 	    }
 	}
 
+	componentDidMount() {
+	    this.gettingData();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		const {invalidData} = this.state;
+
+	    if ( invalidData !== prevState.invalidData ) {
+	    	this.gettingData();
+	    }
+	}
+
+	handleNoMatchClick = () => {
+		this.setState({ invalidData: false })
+	}
+
     render() {
-    	const {beer} = this.state;
+    	const {beer, invalidData} = this.state;
 
 		if (beer !== null) {
+			const helmetData = (
+				<Helmet>
+                    <title>Punk Beers - {beer.name}</title>
+                </Helmet>
+			)
+
 		    return (
 		        <div className="beer-details">
+		        	{helmetData}
 		            <div className="columns">
 		            	<div className="column is-three-quarters">
 				            <h1 className="title">{beer.name}</h1>
@@ -66,6 +102,9 @@ class ProductDetail extends Component {
 		            
 		        </div>
 		    );
+    	}
+    	else if (beer === null && invalidData === true) {
+    		return <NoMatch handleNoMatchClick={this.handleNoMatchClick} />
     	}
     	else {
     		return 'Please wait...'

@@ -32,6 +32,7 @@ class Nav extends React.Component {
 	    				        <div className="dropdown-menu" id="dropdown-menu" role="menu">
 	    				        	<div className="dropdown-content">
 	    						        <div className="dropdown-item"><Link to="/category/light-beers">Light Beers</Link></div>
+	    						        <div className="dropdown-item"><Link to="/category/long-list">Example of long list</Link></div>
 	    						    </div>
 	    				        </div>
 	    		</div>
