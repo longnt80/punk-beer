@@ -3,13 +3,15 @@ import {Helmet} from "react-helmet";
 import axios from 'axios';
 import './styles/ProductDetail.css';
 import NoMatch from './NoMatch';
+import loadingImage from '../Spinner.svg';
 
 class ProductDetail extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			beer: null,
-			invalidData: false
+			invalidData: false,
+			imageLoaded: false
 		}
 	}
 
@@ -59,7 +61,7 @@ class ProductDetail extends Component {
 	}
 
     render() {
-    	const {beer, invalidData} = this.state;
+    	const {beer, invalidData, imageLoaded} = this.state;
 
 		if (beer !== null) {
 			const helmetData = (
@@ -94,8 +96,17 @@ class ProductDetail extends Component {
 		            		</dl>
 		            	</div>
 		            	<div className="column is-one-quarter">
-		            		<figure className="image">
-							  <img alt="beer.name" src={beer.image_url}/>
+							{
+								imageLoaded ? null :
+								<figure className="image">
+									<img alt="beer.name" src={loadingImage}/>
+								</figure>
+							}
+		            		<figure style={imageLoaded ? {} : {display: 'none'}} className="image">
+							  	<img 
+							  		alt="beer.name" 
+									src={beer.image_url}
+									onLoad={() => this.setState({imageLoaded: true})}/>
 							</figure>
 		            	</div>
 		            </div>
