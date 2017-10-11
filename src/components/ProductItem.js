@@ -43,7 +43,6 @@ class ProductItem extends Component {
 					<div className="beer-name">{name}</div>
 						<Link 
 							onClick={() => handleViewDetail(id, this.props)}
-							params={'hello'}
 							className="button detail-btn" 
 							to={`${relativePath}/${id}`}>Details</Link>
 				</div>
