@@ -10,31 +10,17 @@ import ProductDetail from './ProductDetail';
 import NoMatch from './NoMatch';
 import Nav from './Nav';
 
-const data = {
+const urls = {
+    default_endpoint: 'https://api.punkapi.com/v2/beers',
     new_products: 'https://api.punkapi.com/v2/beers?ids=132|109|91|6|100|212|168|126|31|52|192|106|111|1119',
     light_beers: 'https://api.punkapi.com/v2/beers?abv_lt=4',
     long_list: 'https://api.punkapi.com/v2/beers?per_page=80'
 }
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            beerId: 0,
-            beerInfo: {}
-        }
-    }
-
-    handleViewDetail = (id, oneBeerData) => {
-        console.log(oneBeerData.id);
-        this.setState({
-            beerId: id,
-            beerInfo: oneBeerData
-        })
-    }
+    
 
     render() {
-        const {beerId, oneBeerData} = this.state;
 
         return (
                     <div>
@@ -57,24 +43,19 @@ class App extends Component {
                                             {...props}
                                             pageTitle="Homepage"
                                             customHeading="Most active beers"
-                                            data={data.new_products}
-                                            handleViewDetail={this.handleViewDetail}
+                                            url={urls.new_products}
                                             />)} 
                                     />
                                     
                                     <Route path="/category/light-beers/:id" render={(props) =>
                                         ( <ProductDetail
                                             {...props}
-                                            beerId={beerId}
-                                            beerInfo={oneBeerData}
                                             /> )}
                                     />
 
                                     <Route path="/category/long-list/:id" render={(props) =>
                                         ( <ProductDetail
                                             {...props}
-                                            beerId={beerId}
-                                            beerInfo={oneBeerData}
                                             /> )}
                                     />
                                     
@@ -83,8 +64,7 @@ class App extends Component {
                                             {...props}
                                             pageTitle="Light Beers"
                                             customHeading="List of light beers"
-                                            data={data.light_beers}
-                                            handleViewDetail={this.handleViewDetail}
+                                            url={urls.light_beers}
                                             />)} 
                                     />
 
@@ -93,16 +73,13 @@ class App extends Component {
                                             {...props}
                                             pageTitle="Example of long list"
                                             customHeading="A long list of beers"
-                                            data={data.long_list}
-                                            handleViewDetail={this.handleViewDetail}
+                                            url={urls.long_list}
                                             />)} 
                                     />
 
                                     <Route exact path="/:id" render={(props) =>
                                         ( <ProductDetail
                                             {...props}
-                                            beerId={beerId}
-                                            beerInfo={oneBeerData}
                                             /> )}
                                     />
 

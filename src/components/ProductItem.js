@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { menuClosed } from '../actions/index';
 import {
   Link
 } from 'react-router-dom';
@@ -13,8 +15,8 @@ class ProductItem extends Component {
 	}
 
 	render () {
-		const {id, name, image_url, match, handleViewDetail} = this.props;
-		const {imageLoaded} = this.state;
+		const { id, name, image_url, match, toggleMenu } = this.props;
+		const { imageLoaded } = this.state;
 		const relativePath = match.url === '/' ? '' : match.url;
 	
 	
@@ -22,27 +24,27 @@ class ProductItem extends Component {
 			<div className="column is-one-quarter ListedProduct">
 				<div className="ListedProduct-inner">
 					<Link 
-							onClick={() => handleViewDetail(id, this.props)} 
-							to={`${relativePath}/${id}`}>
-								{
-									imageLoaded ? null :
-									<figure className="image is-128x128">
-										<img 
-											src={loadingImage} 
-											alt={name} />
-									</figure>
-								}
+						to={`${relativePath}/${id}`}>
 
-								<figure style={imageLoaded ? {} : {display: 'none'}} className="image is-128x128">
-									<img 
-										src={image_url} 
-										alt={name}
-										onLoad={() => this.setState({imageLoaded: true})} />
-								</figure>
+						{
+							imageLoaded ? null :
+							<figure className="image is-128x128">
+								<img 
+									src={loadingImage} 
+									alt={name} />
+							</figure>
+						}
+
+						<figure style={imageLoaded ? {} : {display: 'none'}} className="image is-128x128">
+							<img 
+								src={image_url} 
+								alt={name}
+								onLoad={() => this.setState({imageLoaded: true})} />
+						</figure>
 					</Link>
 					<div className="beer-name">{name}</div>
 						<Link 
-							onClick={() => handleViewDetail(id, this.props)}
+							onClick={() => toggleMenu(true)}
 							className="button detail-btn" 
 							to={`${relativePath}/${id}`}>Details</Link>
 				</div>
@@ -50,6 +52,10 @@ class ProductItem extends Component {
 		)
 	}
 };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        toggleMenu: (bool) => dispatch(menuClosed(bool))
+    };
+};
 
-
-export default ProductItem;
+export default connect(mapDispatchToProps)(ProductItem);
