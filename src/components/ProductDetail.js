@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+
 import {Helmet} from "react-helmet";
 import axios from 'axios';
+
 import './styles/ProductDetail.css';
 import NoMatch from './NoMatch';
+
 import loadingImage from '../Spinner.svg';
 
 class ProductDetail extends Component {
@@ -16,32 +19,27 @@ class ProductDetail extends Component {
 	}
 
 	gettingData = () => {
-		const {match, beerInfo} = this.props;
+		const {match} = this.props;
 
-	    if (!beerInfo) {
-	    	axios.get('https://api.punkapi.com/v2/beers?ids=' + match.params.id)
-	    	.then(res => {
-	    		console.log(res)
-	    		return res.data[0]	
-	    	})
-	    	.then(result => {
-	    		console.log(result)
-	    		if (result !== undefined) {
-		    		this.setState({
-		    			beer: {...result}
-		    		})
-	    		}
-	    		else {
-	    			this.setState({
-		    			invalidData: true
-		    		})	
-	    		}
-	    	})
-	    	.catch(err => console.log(err))
-	    }
-	    else {
-	    	this.setState({beer: beerInfo})
-	    }
+		axios.get('https://api.punkapi.com/v2/beers?ids=' + match.params.id)
+		.then(res => {
+			console.log(res)
+			return res.data[0]	
+		})
+		.then(result => {
+			console.log(result)
+			if (result !== undefined) {
+				this.setState({
+					beer: {...result}
+				})
+			}
+			else {
+				this.setState({
+					invalidData: true
+				})	
+			}
+		})
+		.catch(err => console.log(err))
 	}
 
 	componentDidMount() {
@@ -124,5 +122,3 @@ class ProductDetail extends Component {
 }
 
 export default ProductDetail;
-
-

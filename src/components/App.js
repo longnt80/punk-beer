@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import {
   Route,
   Link,
   Switch
 } from 'react-router-dom';
-import './styles/App.css';
+
 import ProductsList from './ProductsList';
 import ProductDetail from './ProductDetail';
 import NoMatch from './NoMatch';
 import Nav from './Nav';
+
+import './styles/App.css';
 
 const urls = {
     default_endpoint: 'https://api.punkapi.com/v2/beers',
@@ -17,10 +20,7 @@ const urls = {
     long_list: 'https://api.punkapi.com/v2/beers?per_page=80'
 }
 
-class App extends Component {
-    
-
-    render() {
+const App = (props) => {
 
         return (
                     <div>
@@ -47,17 +47,9 @@ class App extends Component {
                                             />)} 
                                     />
                                     
-                                    <Route path="/category/light-beers/:id" render={(props) =>
-                                        ( <ProductDetail
-                                            {...props}
-                                            /> )}
-                                    />
+                                    <Route path="/category/light-beers/:id" component={ProductDetail}/>
 
-                                    <Route path="/category/long-list/:id" render={(props) =>
-                                        ( <ProductDetail
-                                            {...props}
-                                            /> )}
-                                    />
+                                    <Route path="/category/long-list/:id" component={ProductDetail}/>
                                     
                                     <Route path="/category/light-beers/" render={(props) => 
                                         ( <ProductsList 
@@ -77,11 +69,7 @@ class App extends Component {
                                             />)} 
                                     />
 
-                                    <Route exact path="/:id" render={(props) =>
-                                        ( <ProductDetail
-                                            {...props}
-                                            /> )}
-                                    />
+                                    <Route exact path="/:id" component={ProductDetail}/>
 
                                     <Route component={NoMatch}/>
                                 </Switch>
@@ -90,7 +78,6 @@ class App extends Component {
 
                     </div>
         );
-    }
 }
 
 export default App;

@@ -10,7 +10,7 @@ const NoMatch = ({ handleNoMatchClick }) => {
 	return (
 	    <div>
 	    	There's nothing to show here. 
-	    	<Link onClick={handleNoMatchClick}  to={`/${id}`}>Would you like a random beer?</Link>
+	    	<Link onClick={handleNoMatchClick}  to={`/${id}`}> Would you like a random beer?</Link>
     	</div>
 	);
 }

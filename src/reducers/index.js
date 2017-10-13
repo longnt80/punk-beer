@@ -5,12 +5,10 @@ import {
     itemsIsLoading, 
     itemsNeedPagination, 
     currentPagination,
-    numberOfPage
+    numberOfPage,
 } from './items';
 
-import {
-    menuClosed
-} from './menu'
+import { menuClosed } from './menu'
 
 export default combineReducers({
     items,
@@ -19,5 +17,5 @@ export default combineReducers({
     itemsNeedPagination,
     currentPagination,
     numberOfPage,
-    menuClosed
+    menuClosed,
 });
